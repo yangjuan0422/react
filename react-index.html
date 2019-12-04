@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Hello React!</title>
+		<!--react 核心代码库-->
+		<script src="./js/react.development.js"></script>
+		<!--react-dom 提供与DOM相关的功能-->
+		<script src="./js/react-dom.development.js"></script>
+		<!--babel  将ES6 代码转换为ES5 生产环境中不建议使用
+			 Babel 内嵌了对 JSX 的支持。
+			 如果我们需要使用 JSX，则 <script> 标签的 type 属性需要设置为 text/babel。		
+			
+			JSX是一种JavaScript的语法扩展，
+			运用于React架构中，其格式比较像是模版语言，但事实上完全是在JavaScript内部实现的。
+			元素是构成React应用的最小单位，
+			JSX就是用来声明React当中的元素，
+			React使用JSX来描述用户界面。-->
+		<script src="./js/babel.min.js"></script>
+	</head>
+	<body>
+		<div id="example"></div>
+		<script type="text/babel">
+			/** 
+			 * React 特点 
+			 * 数据驱动视图
+			 * 单向数据流
+			 * 组件化编码
+			 * 支持服务端编写
+			 * 注意：vue也是单向数据流，只是有数据双向绑定的功能
+			 */
+			
+			/**
+				 * 由于 JSX 就是 JavaScript，一些标识符像 class 和 for 不建议作为 XML 属性名。作为替代，
+				 * React DOM 使用 className 和 htmlFor 来做对应的属性。
+				 * 添加自定义属性需要使用 data- 前缀
+				 * JSX 中不能使用 if else 语句 用3元替换	 
+				 * <h1>Hello, world!</h1>虚拟dome 遇到<>解析为html同名的标签
+				 * 数据变量用{}
+				 */	
+			ReactDOM.render(						
+			<h1>Hello, world!</h1>,			
+			document.getElementById('example')
+			);
+		</script>
+	</body>
+
+</html>

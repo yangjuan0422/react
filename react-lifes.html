@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>生命周期与</title>
+  <script src="./js/react.development.js"></script>
+  <script src="./js/react-dom.development.js"></script>
+  <script src="./js/babel.min.js"></script> 
+</head>
+<body>
+   
+   <!-- 
+     生命周期：  组件由生到死的过程 ,用于处理各种逻辑必然会用到生命周期（钩子函数）
+  -->
+  <div id="life"></div>
+  <script type="text/babel">
+  
+    class StateLife extends React.Component{
+      state = {
+        msg:'123',
+        value:''
+      }
+      /*第一加载不运行*/
+      // componentWillReceiveProps 在组件接收到一个新的 prop (更新后)时被调用。这个方法在初始化render时不会被调用。
+    componentWillReceiveProps(nextProps){
+      console.log(this.props)
+      console.log(nextProps)
+    }
+      sing(){
+        return new Promise((resolve,reject)=>{
+            setTimeout(() => {
+              resolve('笑一笑')
+            }, 1000);
+        })
+     }
+     async get(){
+       await this.sing().then((res)=>{
+          console.log(res)
+       })
+     }
+    //  componentWillMount 先执行但是不一定先执行完毕 componentWillMount 在渲染前调用,在客户端也在服务端。
+     componentWillMount(){      
+      console.log('我即将挂载');       
+      //this.get()
+     }
+     //官方建议 进行ajax操作，获取后台数据
+    //  在第一次渲染后调用，只在客户端。之后组件已经生成了对应的DOM结构，可以通过this.getDOMNode()来进行访问。
+    //  如果你想和其他JavaScript框架一起使用，可以在这个方法中调用setTimeout, setInterval或者发送AJAX请求等操作(防止异步操作阻塞UI)。
+     componentDidMount(){       
+      console.log('我在render之后');       
+     }
+     click = () => {
+       this.setState({
+         msg:'234',
+         value:this.refs.inputN.value
+       })
+      //  console.log(this.refs.inputN)
+     }
+    //  componentWillUpdate在组件接收到新的props或者state但还没有render时被调用。在初始化时不会被调用
+     componentWillUpdate(){
+      console.log('我即将更新');      
+     }
+    //  componentDidUpdate 在组件完成更新后立即调用。在初始化时不会被调用。
+     componentDidUpdate(){       
+      console.log('我更新完了');    
+        //可用于再次获取后台数据
+     }
+//      返回一个布尔值。在组件接收到新的props或者state时被调用。在初始化时或者使用forceUpdate时不被调用。
+// 可以在你确认不需要更新组件时使用。
+    //  shouldComponentUpdate(nextProps,nextState){
+    //    console.log(nextState)
+    //     return false
+    //  }
+    // componentWillUnmount在组件从 DOM 中移除之前立刻被调用。
+   componentWillUnmount(){
+     console.log('我即将被卸载')
+    //可用于清除定时器
+   }
+   unMount= () =>{
+     ReactDOM.unmountComponentAtNode(document.getElementById('life'))
+   }
+      render(){   
+        let { msg ,value} = this.state
+        console.log('render');      
+        return (
+          <div>
+            <h1>{msg}</h1>
+            <input type="text" ref="inputN" />
+            <p>{value}</p>
+            <button onClick={this.click}>点击</button>
+            <button onClick={this.unMount}>卸载</button>
+          </div>                      
+        )
+      }
+    }
+    
+    ReactDOM.render(
+      <StateLife></StateLife>,
+       document.getElementById('life')
+     )  
+  </script>
+</body>
+</html>

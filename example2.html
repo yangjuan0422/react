@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>React 组件</title>
+		<script src="./js/react.development.js"></script>
+		<script src="./js/react-dom.development.js"></script>
+		<script src="./js/babel.min.js"></script> 
+	</head>
+	<body>
+		<div id="example"></div>
+		<script type="text/babel">
+			/**
+			 * 原生 HTML 元素名以小写字母开头，而自定义的 React 类名以大写字母开头，比如 HelloMessage 不能写成 helloMessage。
+			 * 除此之外还需要注意组件类只能包含一个顶层标签，否则也会报错
+			 * 组件定义方式：1 、工程函数方式        2、ES6 class 来定义一个组件
+			 */
+			//  1 、工程函数方式 
+			function HelloMessage(porps){				
+				return <h1> Hello world! </h1>				
+			}
+			
+			const element = <HelloMessage />
+			// 2、ES6 class 来定义一个组件
+			class Welcome extends React.Componet{
+				render(){
+					return <h1>Hello world!</h1>					 
+				}
+			}
+			const element2 = <Welcome />
+			 
+			ReactDOM.render(						
+				element2,			
+				document.getElementById('example')
+			);
+		</script>
+	</body>
+</html>

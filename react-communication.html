@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组件通信</title>
+  <script src="./js/react.development.js"></script>
+  <script src="./js/react-dom.development.js"></script>
+  <script src="./js/babel.min.js"></script> 
+</head>
+<body>
+    <!-- 父组件使用props值传给父组件
+    子组件操作父组件 使用回调函数
+    子组件与子组件不可直接传递值，子组件与子组件通信需要借助父组件  -->
+   <div id="comm">
+
+   </div>
+    <script type="text/babel">
+     
+    /**
+     *  组件创建方式
+      1抽取组件 
+      2.编写静态组件
+      3.编写动态组件
+     */
+    class Add extends React.Component{
+      /*将组件里的input 返回到父组件 并清空input内容*/
+      add = () =>{         
+        this.props.allAdd(this.refs.myInput.value) 
+        this.refs.myInput.value=''     
+      }
+      render(){
+        return(
+          <div>
+            <input type="text" ref="myInput"/>
+            <button onClick={this.add}>add#{this.props.addlength}</button>
+          </div>
+        )
+      }
+    }
+    class List extends React.Component{     
+      render(){        
+        const {list} = this.props         
+        return(
+          <ul>
+          {
+            list.map((item,index)=>{
+            return  <li key={index}>{item}</li>
+           })
+          }          
+          </ul>
+        )
+      }
+    }
+    class App extends React.Component{
+      state = {
+        list:[
+          '吃饭',
+          '睡觉',
+          '打游戏'
+        ]
+      }
+      /**add组件回调的函数 更改list数组*/
+      add =(value) =>{
+        let {list}=this.state
+        // 把valu插入到list的第一个位置上
+        list.unshift(value)        
+        this.setState({
+          list
+        })
+         
+      }
+      render(){
+        const {list}=this.state
+        return (
+          <div>
+              <Add allAdd={this.add}  addlength={list.length}/>
+              <List list={list} />
+          </div>         
+        )
+      }
+    }
+     ReactDOM.render(
+       <App></App>,
+       document.getElementById('comm')
+     )     
+
+    </script>
+</body>
+</html>

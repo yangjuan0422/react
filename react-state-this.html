@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <title>组价的state与 this指向 </title>
+  <script src="./js/react.development.js"></script>
+  <script src="./js/react-dom.development.js"></script>
+  <script src="./js/babel.min.js"></script>  
+</head>
+
+<body>
+  <div id="demo">   </div>
+  <script type="text/babel">
+  class ClickMe extends React.Component{
+  constructor(porps){
+    super(porps);
+    this.state = {
+      msg:'点我',
+      flag:true
+    }
+    // this.click=this.click.bind(this)
+  }
+  /**
+    * click 是jsx的点击事件执行的函数， 类方法this 需要用户指定 没有指定undefined
+    * this 指向丢失用bind
+    * 1、在constructor中指定 this.click=this.click.bind(this)
+    * 2、标签点击事件时指定  this.click.bind(this)
+    * 3、将函数修改为箭头函数
+    */ 
+  // click(){     
+  //   let {flag} = this.state
+  //   this.setState({
+  //     flag : !flag
+  //   })
+  // }
+  click = () =>{       
+      let {flag} = this.state
+      // 设置状态值
+      this.setState({
+        flag : !flag
+      })     
+  }
+  render(){
+    const {flag} = this.state
+    let res = flag ? '点我':'点过了'
+     /**
+      return (       
+        <div onClick={this.click.bind(this)}>{res}</div>
+      )
+    */ 
+    return (       
+      <div onClick={this.click}>{res}</div>
+    )
+  }
+}
+ReactDOM.render(
+  <ClickMe />,
+  document.getElementById('demo')
+  )
+</script>
+</body>
+
+</html>

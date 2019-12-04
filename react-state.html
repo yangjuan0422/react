@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>受控组件和非受控组件</title>
+  <script src="./js/react.development.js"></script>
+  <script src="./js/react-dom.development.js"></script>
+  <script src="./js/babel.min.js"></script> 
+</head>
+<body>
+    <!--  
+    受控组件与非受控组件 （针对state）
+    受控组件 作用 为了收集表单数据
+    react 不建议用非受控组件方式获取数据
+   -->
+   
+  <div id="life"></div>
+  <script type="text/babel">
+  
+    class StateLife extends React.Component{
+      state={
+        age:''
+      }
+      // 非受控组件
+      input =() =>{
+        console.log(this.refs.nameInput.value)        
+      }
+      // 受控组件
+      onChange =(event) =>{
+        //  event.target.value 值
+        console.log(event.target.value)
+        this.setState({
+          age:event.target.value
+        })
+      }
+      render(){
+        let {age} =this.state
+        return (
+          <div>
+            姓名：
+            <input type="text"  ref="nameInput"/>
+            <button onClick={this.input}>获取姓名</button>
+            <br/>
+            <br/>
+            年龄：
+            <input type="text"  ref="ageInput" value={age} onChange={this.onChange}/>
+            <button onClick={this.inputage}>获取年龄</button>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(
+      <StateLife></StateLife>,
+       document.getElementById('life')
+     )  
+  </script>
+</body>
+</html>

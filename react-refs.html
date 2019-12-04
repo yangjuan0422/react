@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ref属性</title>
+  <script src="./js/react.development.js"></script>
+  <script src="./js/react-dom.development.js"></script>
+  <script src="./js/babel.min.js"></script> 
+</head>
+<body>
+  <!-- 
+   ref 的两种使用方法
+   -->
+   <div id="refs"></div>
+   <script type="text/babel">
+      class Complex extends React.Component{
+        click =() =>{
+          console.log(this.refs.myInput.value)
+          // console.log(this.input.value);
+          // console.log(this.p.innerText)
+        }
+        render(){
+          return (
+            <div>
+               <input type="text"  ref={(input) =>{this.input = input}}/> 
+               <button onClick={this.click}>点击</button>
+               <p ref={(p) => {this.p = p}}>哟哟</p>
+               <input  type='text'  ref='myInput'/>
+            </div>            
+          )
+        }
+      }
+      ReactDOM.render(
+        <Complex />,
+        document.getElementById('refs')
+      )
+   </script>
+</body>
+</html>

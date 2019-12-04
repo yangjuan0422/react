@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>React 列表</title>
+		<script src="./js/react.development.js"></script>
+		<script src="./js/react-dom.development.js"></script>
+		<script src="./js/babel.min.js"></script> 
+	</head>
+	<body>
+		<div id="example"></div>
+		<script type="text/babel">
+		 	//列表 1
+		 	const vdom=<ul>
+		 		<li>1</li>
+		 		<li>2</li>
+		 		<li>3</li>
+		 		<li>4</li>
+		 		<li>5</li>
+		 	</ul>
+		 	//列表 2
+			 let lis=[]
+			 let names=['赵','钱','孙','李']
+			 names.forEach((name,index) =>{
+			 	 lis.push(
+			 	 	<li key={index}>{name}</li>
+			 	 )
+			 })
+//			 console.log(lis)
+			 const vdom2=<ul>{lis}</ul>
+			 // 列表3
+			 const vdom3=<ul>
+			 		 {
+			 		 	names.map( (name,index) =>
+					 	   <li key={index}>{name}</li>					 
+			 				)
+			 		 }
+			 </ul> 
+			 // 列表3 箭头函数没有{} 直接返回 有大括号必须有return
+			  const vdom4=<ul>
+			 		 {
+			 		 	names.map( (name,index) =>{
+					 	  return <li key={index}>{name}</li>					 
+			 				})
+			 		 }
+			 </ul>
+			ReactDOM.render(						
+				vdom4,			
+				document.getElementById('example')
+			);
+		</script>
+	</body>
+</html>

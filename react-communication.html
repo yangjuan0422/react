@@ -61,8 +61,8 @@
           '打游戏'
         ]
       }
-      /**add组件回调的函数 更改list数组*/
-      add =(value) =>{
+     /**add组件回调的函数 更改list数组*/
+      allAdd = (value)=>{
         let {list}=this.state
         // 把valu插入到list的第一个位置上
         list.unshift(value)        
@@ -75,7 +75,7 @@
         const {list}=this.state
         return (
           <div>
-              <Add allAdd={this.add}  addlength={list.length}/>
+              <Add allAdd={this.allAdd}  addlength={list.length}/>
               <List list={list} />
           </div>         
         )

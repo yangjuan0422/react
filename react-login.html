@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>登录组件化</title>
+  <script src="./js/react.development.js"></script>
+  <script src="./js/react-dom.development.js"></script>
+  <script src="./js/babel.min.js"></script> 
+  <link rel="stylesheet" href="./css/base.css">
+  <style>
+    .container{      
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      background-color: #282c34;
+      min-height: 100vh;
+
+      justify-content: center;
+      font-size: calc(10px + 2vmin);
+      color: white;
+    }
+    .form-item{      
+      border-bottom: 1px solid rgba(255, 255, 255, .2);
+    }   
+    .form-item input{
+      padding: 10px;
+      border: none !important;
+      background-color: #282c34 !important;
+
+      color:white !important;
+      
+    }
+    .form-item input::placeholder{
+      color:white !important;
+    }
+    .form-item input:focus{
+      outline: none !important;
+    }
+    .form-item .form-item-error{
+      padding-left: 10px;
+      padding-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div id="example"></div>
+  <script type="text/babel">
+
+class Login extends React.Component{
+
+render(){
+  return(
+    <div className="container">
+      <div  className="form-item">
+        <input type="text" 
+          name="name"
+          placeholder='请输入姓名' />
+        <p className="form-item-error">ddd</p>
+      </div>
+      <div  className="form-item">
+        <input type="password" 
+          name="psd"
+          placeholder='请输入密码' />
+        <p className="form-item-error"></p>
+      </div>
+      <div  className="form-item">
+        <input type="tel" 
+          name="tel"
+          placeholder='请输入手机号' />
+        <p className="form-item-error"></p>
+      </div>
+
+    </div>
+  )
+}
+
+}
+    ReactDOM.render(
+     <Login />,
+    document.getElementById('example')
+)
+  </script>
+</body>
+</html>

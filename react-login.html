@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>登录组件化</title>
+  <title>登录案例</title>
   <script src="./js/react.development.js"></script>
   <script src="./js/react-dom.development.js"></script>
-  <script src="./js/babel.min.js"></script> 
+  <script src="./js/babel.min.js"></script>
   <link rel="stylesheet" href="./css/base.css">
   <style>
-    .container{      
+    .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-
+     
       background-color: #282c34;
       min-height: 100vh;
 
@@ -22,66 +23,166 @@
       font-size: calc(10px + 2vmin);
       color: white;
     }
-    .form-item{      
+
+    .form-item{
+          
+      width: 210px;      
+    }
+    
+    .form-item-border {     
       border-bottom: 1px solid rgba(255, 255, 255, .2);
-    }   
-    .form-item input{
+    }
+
+    .form-item input {
       padding: 10px;
       border: none !important;
       background-color: #282c34 !important;
 
-      color:white !important;
-      
+      color: white !important;
+
     }
-    .form-item input::placeholder{
-      color:white !important;
+    .form-item select{
+      margin: 10px;  
+      width: 100px;    
     }
-    .form-item input:focus{
+    .form-item input::placeholder   {
+      color: white !important;
+    }
+
+    .form-item input:focus, .form-item select:focus {
       outline: none !important;
     }
-    .form-item .form-item-error{
+
+    .form-item .form-item-error {
       padding-left: 10px;
       padding-bottom: 6px;
+
+      font-size: 12px;
+    }
+   
+    .container .buttonDiv{
+      width: 100%;
+      background-color: cadetblue !important;
+      padding: 10px;
+
+      text-align: center;
     }
   </style>
 </head>
+
 <body>
   <div id="example"></div>
   <script type="text/babel">
 
 class Login extends React.Component{
+  state = {
+    name:'小耳朵',
+    nameerror:'',
+    psd:'aba1234567',
+    psderror:'',
+    tel:'18290384851', 
+    telerror:'',    
+    selectList:['北京','重庆','湖北','陕西'],
+    select:'陕西'
 
-render(){
-  return(
-    <div className="container">
-      <div  className="form-item">
-        <input type="text" 
-          name="name"
-          placeholder='请输入姓名' />
-        <p className="form-item-error">ddd</p>
-      </div>
-      <div  className="form-item">
-        <input type="password" 
-          name="psd"
-          placeholder='请输入密码' />
-        <p className="form-item-error"></p>
-      </div>
-      <div  className="form-item">
-        <input type="tel" 
-          name="tel"
-          placeholder='请输入手机号' />
-        <p className="form-item-error"></p>
-      </div>
+  }
+  // 公共的受控组件写入数据
+  InputParam = (event) => {
+    let name = event.target.name
+    let nameValue = event.target.value
+    let filter = new RegExp(event.target.getAttribute('filter'))
+    // console.log(nameValue,filter,filter.test(nameValue));    
+    let error =''
+    if(nameValue.length == 0){
+      error ='请输入信息'
+    }else if(!filter.test(nameValue)){
+      error ='请输入格式错误'
+    }else{
+      error =''
+    }
+    this.setState({
+        [name+'error']:error ,
+        //  [name] 表示变量
+        [name]:nameValue
+    })      
+  } 
+  // 下拉框切换复制
+  SelectChage =(event) =>{
+      
+     this.setState({
+      select:event.target.value
+     })
+    
+  }
+  // 登录
+  LoginClick = () =>{
+    let {  name, nameerror, psd, psderror, tel, telerror, select} = this.state 
+     this.setState({
+      nameerror:name ?'':'请输入姓名',
+      psderror:psd ?'':'请输入密码',
+      telerror:tel ?'':'请输入手机号'
+     }) 
+     if(name && psd && tel){
+        alert(name + nameerror +  psd +  psderror +  tel +  telerror + select)
+     }             
+  }
+  render(){     
+    let {  name, nameerror, psd, psderror, tel, telerror,selectList, select} = this.state 
+    return(
+      <div className="container">
+        <div  className="form-item form-item-border" >
+          <input type="text" 
+            name="name"
+            value={name}
+            filter="^[\u4e00-\u9fa5]{2,4}$"
+            onChange={this.InputParam}
+            maxLength="4"
+            placeholder="请输入姓名" />
+          <p className="form-item-error">{nameerror}</p>
+        </div>
+        <div  className="form-item form-item-border">
+          <input type="password" 
+            name="psd"
+            value={psd}
+            filter="^([A-Za-z0-9]\w{7,17})$"
+            onChange={this.InputParam}
+            maxLength="17"
+            placeholder="请输入密码" />
+          <p className="form-item-error">{psderror}</p>
+        </div>
+        <div  className="form-item form-item-border">
+          <input type="tel" 
+            name="tel"
+            value={tel}
+            filter="^1[345789]\d{9}$"
+            onChange={this.InputParam}
+            maxLength="11"
+            placeholder="请输入手机号" />
+          <p className="form-item-error">{telerror}</p>
+        </div>
+         <div className="form-item">
+          <select value={select} onChange={this.SelectChage}>
+            {
+              selectList.map((item,index)=>{
+                return <option key={index}>{item}</option>
+              })
+            }
+          </select>
+        </div>
+        <div className="form-item">
+          <div className="buttonDiv" onClick={this.LoginClick}>登录</div>
+        </div>       
 
-    </div>
-  )
+      </div>
+    )
+  }
+
 }
-
-}
-    ReactDOM.render(
+ReactDOM.render(
      <Login />,
     document.getElementById('example')
 )
   </script>
 </body>
+
 </html>
